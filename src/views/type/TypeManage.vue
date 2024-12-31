@@ -5,7 +5,8 @@ import { PlusOutlined } from '@ant-design/icons-vue'
 import TypeList from './components/TypeList.vue'
 import SubTypeList from './components/SubTypeList.vue'
 import TypeForm from './components/TypeForm.vue'
-import { useType, type TypeItem } from './composables/useType'
+import { useType } from './composables/useType'
+import { TypeItem } from '@/core/models'
 
 const {
   mainTypes,

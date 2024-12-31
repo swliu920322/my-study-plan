@@ -32,8 +32,7 @@ export function useType() {
   // 添加类型
   const addType = async (data: Omit<TypeItem, 'id' | 'createdAt' | 'updatedAt'>) => {
     // 创建一个普通对象的副本
-    const rawData = toRaw(data)
-    const newType = await typeRepository.create(rawData)
+    const newType = await typeRepository.create(data)
     types.value.push(newType)
     message.success('添加成功')
     return newType
