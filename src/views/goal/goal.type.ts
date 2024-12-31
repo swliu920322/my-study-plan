@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs'
+
 // 任务类型
 export type TaskType = 'study' | 'work' | 'life'
 
@@ -17,4 +19,10 @@ export interface Goal {
   endDate: string
   description: string
   progress: number
+}
+
+export interface GoalForm {
+  name: string
+  dateRange: [Dayjs, Dayjs]
+  description: string
 }
