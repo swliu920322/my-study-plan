@@ -17,15 +17,15 @@ export abstract class BaseRepository<T extends IModel> implements IRepository<T>
   }
 
   async create(data: Omit<T, 'id' | 'createdAt' | 'updatedAt'>): Promise<T> {
+    const inputData = { ...data }
     const items = await this.findAll()
     const now = Date.now()
     const newItem = {
-      ...data,
+      ...inputData,
       id: now.toString(),
       createdAt: now,
       updatedAt: now,
     } as T
-
     items.push(newItem)
     await this.storage.set(this.storageKey, items)
     return newItem
