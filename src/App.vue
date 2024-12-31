@@ -1,6 +1,6 @@
 <template>
   <a-config-provider :csp="{ nonce: 'YourNonceCode' }" :locale="zhCN">
-    <div class="flex">
+    <div class="flex h-screen w-screen">
       <aside :style="{ width: collapsed ? '80px' : '200px' }" class="transition-all">
         <div class="p-4">
           <a-button type="primary" :icon="h(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)"
@@ -10,7 +10,7 @@
         <a-menu id="menu" v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" mode="inline"
           :inline-collapsed="collapsed" :items="menuItems" @click="handleMenuClick" />
       </aside>
-      <main class="flex-1">
+      <main class="flex-1 overflow-hidden">
         <RouterView />
       </main>
     </div>

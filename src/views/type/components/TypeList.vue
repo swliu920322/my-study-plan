@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Button, Popconfirm } from 'ant-design-vue'
 import { EditOutlined, DeleteOutlined, RightOutlined } from '@ant-design/icons-vue'
-import type { TypeItem } from '../composables/useType'
+import { TypeItem } from '@/core/models'
 
 defineProps<{
   types: TypeItem[]
   selectedType: TypeItem | null
-  subTypesCount: number
+  getSubTypesCount: (parentId: string) => number
 }>()
 
 defineEmits<{
@@ -42,7 +42,7 @@ defineEmits<{
         </div>
         <div class="p-4">
           <div class="flex justify-between items-center text-sm text-gray-500">
-            <span>{{ subTypesCount }} 个小类</span>
+            <span>{{ getSubTypesCount(type.id) }} 个小类</span>
             <RightOutlined :class="selectedType?.id === type.id ? 'rotate-90' : ''"
               class="transition-transform duration-300" />
           </div>

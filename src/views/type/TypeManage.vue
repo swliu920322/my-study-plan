@@ -16,7 +16,8 @@ const {
   addType,
   updateType,
   deleteType,
-  loadTypes
+  loadTypes,
+  getSubTypesCount
 } = useType()
 
 const modalVisible = ref(false)
@@ -57,7 +58,7 @@ const handleSubmit = async (data: Omit<TypeItem, 'id' | 'createdAt' | 'updatedAt
 </script>
 
 <template>
-  <div class="p-6 space-y-6">
+  <div class="p-6 space-y-6 overflow-hidden w-full h-full">
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-2xl font-bold text-gray-800">类型管理</h1>
       <Button type="primary" @click="handleAdd()">
@@ -69,8 +70,8 @@ const handleSubmit = async (data: Omit<TypeItem, 'id' | 'createdAt' | 'updatedAt
     </div>
 
     <!-- 大类列表 -->
-    <TypeList :types="mainTypes" :selected-type="selectedType" :sub-types-count="subTypes.length" @select="selectType"
-      @add="handleAdd" @edit="handleEdit" @delete="deleteType" />
+    <TypeList :types="mainTypes" :selected-type="selectedType" :get-sub-types-count="getSubTypesCount"
+      @select="selectType" @add="handleAdd" @edit="handleEdit" @delete="deleteType" />
 
     <!-- 小类列表 -->
     <SubTypeList v-if="selectedType" :parent-type="selectedType" :types="subTypes"

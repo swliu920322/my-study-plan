@@ -24,6 +24,11 @@ export function useType() {
     return types.value.filter((type) => type.pId === selectedType.value?.id)
   })
 
+  // 获取指定类型的子类数量
+  const getSubTypesCount = (parentId: string) => {
+    return types.value.filter((type) => type.pId === parentId).length
+  }
+
   // 选择类型
   const selectType = (type: TypeItem) => {
     selectedType.value = type
@@ -73,5 +78,6 @@ export function useType() {
     updateType,
     deleteType,
     loadTypes,
+    getSubTypesCount,
   }
 }

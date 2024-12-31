@@ -83,7 +83,7 @@ const viewGoalTasks = (goal: Goal) => {
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-6 overflow-auto w-full h-full">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold text-gray-800">目标管理</h1>
       <Button type="primary" @click="handleAddGoal">
