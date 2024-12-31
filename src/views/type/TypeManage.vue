@@ -23,24 +23,28 @@ const {
 const modalVisible = ref(false)
 const isEditing = ref(false)
 const currentType = ref<TypeItem | null>(null)
+const parentType = ref<TypeItem | null>(null)
 
 // 初始化加载数据
 loadTypes()
 
 // 处理类型相关操作
-const handleAdd = (parentId: string | null = null) => {
+const handleAdd = (parent: TypeItem | null = null) => {
   isEditing.value = false
-  currentType.value = {
-    name: '',
-    description: '',
-    pId: parentId
-  } as TypeItem
+  currentType.value = null
+  parentType.value = parent
   modalVisible.value = true
 }
 
 const handleEdit = (type: TypeItem) => {
   isEditing.value = true
-  currentType.value = { ...type }
+  currentType.value = { ...type }  // 创建副本
+  // 如果是子类，设置其父类型
+  if (type.pId) {
+    parentType.value = selectedType.value
+  } else {
+    parentType.value = null
+  }
   modalVisible.value = true
 }
 
@@ -51,6 +55,7 @@ const handleSubmit = async (data: Omit<TypeItem, 'id' | 'createdAt' | 'updatedAt
     } else {
       await addType(data)
     }
+    modalVisible.value = false
   } catch (error) {
     console.error('保存失败:', error)
   }
@@ -74,11 +79,11 @@ const handleSubmit = async (data: Omit<TypeItem, 'id' | 'createdAt' | 'updatedAt
       @select="selectType" @add="handleAdd" @edit="handleEdit" @delete="deleteType" />
 
     <!-- 小类列表 -->
-    <SubTypeList v-if="selectedType" :parent-type="selectedType" :types="subTypes"
-      @add="() => handleAdd(selectedType?.id)" @edit="handleEdit" @delete="deleteType" />
+    <SubTypeList v-if="selectedType" :parent-type="selectedType" :types="subTypes" @add="() => handleAdd(selectedType)"
+      @edit="handleEdit" @delete="deleteType" />
 
     <!-- 表单 -->
     <TypeForm v-model:visible="modalVisible" :is-editing="isEditing" :initial-values="currentType"
-      @submit="handleSubmit" />
+      :parent-type="parentType" @submit="handleSubmit" />
   </div>
 </template>
